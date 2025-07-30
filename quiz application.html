@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizMaster Pro - Interactive Learning Platform</title>
+    <link rel="stylesheet" href="quiz application.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Page -->
+        <div id="welcome-page" class="page active">
+            <h1 class="welcome-title">🎯 QuizMaster Pro</h1>
+            <p class="welcome-subtitle">Challenge yourself with our interactive quiz platform and track your learning progress!</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <span class="feature-icon">🧠</span>
+                    <span>Multiple quiz categories to test your knowledge</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⚡</span>
+                    <span>Instant feedback on every answer</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📊</span>
+                    <span>Detailed performance tracking and statistics</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🏆</span>
+                    <span>Achievement system and progress monitoring</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⏱️</span>
+                    <span>Timed challenges for extra excitement</span>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="showPage('login-page')">Get Started</button>
+            <button class="btn-secondary" onclick="showPage('dashboard-page')">Quick Demo</button>
+        </div>
+
+        <!-- Login Page -->
+        <div id="login-page" class="page">
+            <button class="back-btn" onclick="showPage('welcome-page')">← Back</button>
+            <h2 class="login-title">🔐 Welcome Back!</h2>
+            
+            <div class="demo-note">
+                <strong>Demo Mode:</strong> This is a sample login form. Enter any username and password to continue to the quiz platform.
+            </div>
+
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" id="username" class="form-input" placeholder="Enter your username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="btn-primary">Login & Start Learning</button>
+            </form>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page">
+            <button class="back-btn" onclick="showPage('welcome-page')">← Back to Home</button>
+            <h2 class="dashboard-title">📚 Learning Dashboard</h2>
+            <p class="user-welcome">Welcome back, <span id="username-display">Quiz Master</span>!</p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Quizzes Taken</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">85%</div>
+                    <div class="stat-label">Average Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">47</div>
+                    <div class="stat-label">Questions Answered</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Achievements</div>
+                </div>
+            </div>
+
+            <h3 style="color: #333; margin: 30px 0 20px 0; font-size: 1.5rem;">Choose Your Quiz Category</h3>
+            
+            <div class="quiz-categories">
+                <div class="category-card" onclick="startQuiz('general')">
+                    <div class="category-icon">🌍</div>
+                    <div class="category-title">General Knowledge</div>
+                    <div class="category-desc">Test your knowledge across various topics including geography, history, and science.</div>
+                </div>
+                
+                <div class="category-card" onclick="startQuiz('science')">
+                    <div class="category-icon">🔬</div>
+                    <div class="category-title">Science & Nature</div>
+                    <div class="category-desc">Explore questions about biology, chemistry, physics, and the natural world.</div>
+                </div>
+                
+                <div class="category-card" onclick="startQuiz('history')">
+                    <div class="category-icon">🏛️</div>
+                    <div class="category-title">History & Culture</div>
+                    <div class="category-desc">Journey through time with questions about historical events and cultural knowledge.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Page -->
+        <div id="quiz-page" class="page">
+            <div class="quiz-header">
+                <h2 class="quiz-title" id="quiz-category-title">General Knowledge Quiz</h2>
+                <div class="quiz-info">
+                    <div class="timer" id="timer">⏱️ 2:30</div>
+                    <div class="score-badge" id="current-score">Score: 0</div>
+                </div>
+            </div>
+
+            <button class="back-btn" onclick="showPage('dashboard-page')">← Back to Dashboard</button>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            
+            <div class="question-counter" id="question-counter">
+                Question 1 of 5
+            </div>
+
+            <div class="question-card">
+                <div class="question-text" id="question-text">
+                    Loading question...
+                </div>
+                
+                <div class="options-container" id="options-container">
+                    <!-- Options will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="feedback" id="feedback">
+                <!-- Feedback will be shown here -->
+            </div>
+
+            <button class="next-btn" id="next-btn" onclick="nextQuestion()">
+                Next Question
+            </button>
+        </div>
+
+        <!-- Results Page -->
+        <div id="results-page" class="page">
+            <h2 class="results-title">🎉 Quiz Complete!</h2>
+            
+            <div class="score-display">
+                <div class="score-number" id="final-score">0</div>
+                <div class="score-text">out of 5 correct</div>
+            </div>
+
+            <div class="performance-stats">
+                <div class="performance-item">
+                    <div class="performance-value" id="accuracy">0%</div>
+                    <div class="performance-label">Accuracy</div>
+                </div>
+                <div class="performance-item">
+                    <div class="performance-value" id="time-taken">0:00</div>
+                    <div class="performance-label">Time Taken</div>
+                </div>
+                <div class="performance-item">
+                    <div class="performance-value" id="streak">0</div>
+                    <div class="performance-label">Best Streak</div>
+                </div>
+            </div>
+
+            <p id="performance-message" style="font-size: 1.2rem; color: #333; margin: 20px 0;"></p>
+            
+            <button class="btn-success" onclick="restartQuiz()">Try Again</button>
+            <button class="btn-primary" onclick="showPage('dashboard-page')">Back to Dashboard</button>
+        </div>
+    </div>
+    <script src="quiz application.js"></script>
+</body>
+</html>
